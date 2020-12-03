@@ -51,7 +51,7 @@ function App() {
         <Switch>
           {/* <Route exact path='/' component={Home}></Route> */}
           <Route exact path='/' render={()=>(<Home object={object} ></Home>)}></Route>
-          <Route exact path='/:id' render={(props)=>(<Detail /* props={props} */ object={object}/>)}></Route>
+          <Route exact path='/:id' render={(props)=>(<Detail props={props} object={object}/>)}></Route>
           <Route path='/*'>404 NOT FOUND</Route>
         </Switch>
     </Router>

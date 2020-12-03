@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
+import {withRouter} from 'react-router-dom';
+
 const Active = styled.div`
     display: flex;
     align-items: center;
@@ -106,9 +108,9 @@ const MadeBy = styled.div`
 const ImageTemplate = styled.div`
     position: relative;
 `;  
-function Card({object}) {
+function Card({object,history}) {
     return (
-        <CardTemplate>
+        <CardTemplate onClick={()=>history.push(`/${object.idx}`)}>
             <ImageTemplate>
                 <Image src={object.img}></Image>
                 <Active>{object.active}</Active>
@@ -127,4 +129,4 @@ function Card({object}) {
     )
 }
 
-export default Card
+export default withRouter(Card);

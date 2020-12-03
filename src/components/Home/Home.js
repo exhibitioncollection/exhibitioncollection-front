@@ -127,4 +127,4 @@ function Home({object}) {
     )
 }
 
-export default Home
+export default Home;

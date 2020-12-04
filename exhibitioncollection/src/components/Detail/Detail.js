@@ -6,7 +6,8 @@ const Poster = styled.div`
     align-items:flex-end;
     width: 100%;
     height:auto;
-    padding-top: 45%; 
+    padding-top: 43%; 
+    padding-bottom: 5%;
     max-height: 103rem;
     background-size: 100%;
     background-image: url(${props => props.src});
@@ -94,6 +95,7 @@ const Info = styled.div`
     }
     @media screen and (max-width:375px){
         margin: 4rem;
+    }
 `;
 const Title = styled.div`
     font-size: 6rem;
@@ -132,24 +134,26 @@ const Content = styled.div`
     @media screen and (max-width:375px){
         font-size: 0.5rem;
         margin-top: 2.5rem;
+    }
 `;
-function Detail({object}) {
+function Detail({object,props}) {    
+    const id=props.match.params.id;
     return (
         <>
-            <Poster src={object[1].img}>
+            <Poster src={object[id].img}>
                 <UserDiv>
                     <UserIcon></UserIcon>
-                    <UserName>{object[1].madeBy}</UserName>
+                    <UserName>{object[id].madeBy}</UserName>
                 </UserDiv>
-                <MemberType>{object[1].active}</MemberType>
+                <MemberType>{object[id].active}</MemberType>
             </Poster>
             <Info>
-                <Title>{object[1].name}</Title>
-                <Duration>{object[1].term}</Duration>
+                <Title>{object[id].name}</Title>
+                <Duration>{object[id].term}</Duration>
                 <Content>"여기는 내용인데 말이죠 아직 내용을 몰라요...."</Content>
             </Info>
         </>
     )
 }
 
-export default Detail;
+export default Detail

@@ -27,7 +27,6 @@ const UserDiv = styled.div`
     justify-content: flex-start;
 `;
 const UserIcon = styled.img`
-    background-color: yellow;
     margin-left: 10rem;
     width: 10rem;
     height: 10rem;
@@ -113,7 +112,7 @@ const Title = styled.div`
 const Duration = styled.div`
     font-size: 2rem;
     margin-top: 5rem;
-    color: #000000;
+    color: #646464;
     @media screen and (max-width:768px){
         font-size: 1rem;
         margin-top: 2.5rem;
@@ -126,7 +125,7 @@ const Duration = styled.div`
 const Content = styled.div`
     font-size: 2rem;
     margin-top: 10rem;
-    color: #000000;
+    color: #646464;
     @media screen and (max-width:768px){
         font-size: 1rem;
         margin-top: 5rem;
@@ -142,7 +141,7 @@ function Detail({object,props}) {
         <>
             <Poster src={object[id].img}>
                 <UserDiv>
-                    <UserIcon></UserIcon>
+                    <UserIcon src={object[id].userImg}></UserIcon>
                     <UserName>{object[id].madeBy}</UserName>
                 </UserDiv>
                 <MemberType>{object[id].active}</MemberType>
@@ -150,7 +149,7 @@ function Detail({object,props}) {
             <Info>
                 <Title>{object[id].name}</Title>
                 <Duration>{object[id].term}</Duration>
-                <Content>"여기는 내용인데 말이죠 아직 내용을 몰라요...."</Content>
+                <Content>{object[id].detail}</Content>
             </Info>
         </>
     )

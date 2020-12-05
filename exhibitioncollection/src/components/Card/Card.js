@@ -118,7 +118,7 @@ function Card({object, history}) {
             <TextBox>
                 <TextBoxSub1>
                     <Name>{object.name}</Name>
-                    <Type>{object.type}</Type>
+                    <Type>{object.category}</Type>
                 </TextBoxSub1>
                 <TextBoxSub2>
                     <Term>{object.term}</Term>

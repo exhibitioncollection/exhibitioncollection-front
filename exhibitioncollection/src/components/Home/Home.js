@@ -89,6 +89,7 @@ const TextTitle = styled.div`
     color: #FFD500;
     font-size: 5rem;
     margin: 6rem 0;
+    margin-bottom: 2rem;
 `;
 const GridTemplate = styled.div`
     display: grid;
@@ -102,7 +103,20 @@ const GridTemplate = styled.div`
         grid-template-columns: 1fr;
     }
 `;
-function Home({object}) {
+const CreateButton = styled.button`
+    color: black;
+    width: 20rem;
+    height: 5rem;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    background-color : #323232;
+    color : white;
+    border : none;
+    border-radius : 6%;
+/*     align-self: flex-end;
+    margin-right: 10%; */
+`;
+function Home({object, props}) {
     return (
         <>
             <Banner>
@@ -115,6 +129,7 @@ function Home({object}) {
             </Banner>
             <Body>
                 <TextTitle>All Projects</TextTitle>
+                <CreateButton onClick={()=>props.history.push('/create')} >Create Button</CreateButton>
                 <GridTemplate>
                     {
                         object.map((obj,idx)=>(

@@ -4,6 +4,7 @@ import {
 import Home from './components/Home/Home';
 import Detail from './components/Detail/Detail';
 import Header from './components/Header/Header';
+import Create from './components/Create/Create';
 
 const object = [
   {
@@ -62,7 +63,8 @@ function App() {
       <Header></Header>
         <Switch>
           {/* <Route exact path='/' component={Home}></Route> */}
-          <Route exact path='/' render={()=>(<Home object={object} ></Home>)}></Route>
+          <Route exact path='/' render={(props)=>(<Home props={props} object={object} ></Home>)}></Route>
+          <Route exact path='/create' render={(props)=>(<Create props={props} />)}></Route>
           <Route exact path='/:id' render={(props)=>(<Detail props={props} object={object}/>)}></Route>
           <Route path='/*'>404 NOT FOUND</Route>
         </Switch>

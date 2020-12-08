@@ -135,7 +135,7 @@ const Content = styled.div`
         margin-top: 2.5rem;
     }
 `;
-function Detail({object,props}) {    
+function Detail({object, props}) {    
     const id=props.match.params.id;
     return (
         <>

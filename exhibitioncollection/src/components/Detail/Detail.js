@@ -96,16 +96,16 @@ const Info = styled.div`
         margin: 4rem;
     }
 `;
-const Title = styled.div`
-    font-size: 6rem;
+const Title = styled.span`
+    font-size: 4rem;
     margin-top: 5rem;
     font-weight: bold;
     @media screen and (max-width:768px){
-        font-size: 4rem;
+        font-size: 2.5rem;
         margin-top: 2.5rem;
     }
     @media screen and (max-width:375px){
-        font-size: 2rem;
+        font-size: 0.5rem;
         margin-top: 1rem;
     }
 `;
@@ -147,7 +147,7 @@ function Detail({object, props}) {
                 <MemberType>{object[id].active}</MemberType>
             </Poster>
             <Info>
-                <Title>{object[id].name}</Title>
+                <Title>{object[id].name}{object[id].subName}</Title>
                 <Duration>{object[id].term}</Duration>
                 <Content>{object[id].detail}</Content>
             </Info>

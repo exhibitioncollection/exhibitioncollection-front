@@ -104,11 +104,28 @@ function Create({props}) {
             fileReader.onload = function(e) {
               setImgSrc(e.target.result);
             }
+        }else{
+            setImgSrc("/images/default.gif");
         }
     }
     const onHandleSubmit = async (evt) => {
         evt.preventDefault();
-        const object = {
+
+        const object = new FormData();
+        object.append('img',evt.target.img.files[0]);
+        object.append('userImg',evt.target.userImg.attributes.src.value);
+        object.append('name',evt.target.name.value);
+        object.append('subName',evt.target.subName.value);
+        object.append('category',evt.target.category.value);
+        object.append('term',evt.target.term.value);
+        object.append('madeBy',evt.target.madeBy.value);
+        object.append('active',evt.target.active.value);
+        object.append('detail',evt.target.detail.value);
+         for(var key of object.entries())
+        {
+            console.log(`${key}`);
+        }  
+/*         const object = {
             img : evt.target.img.files[0],
             userImg : evt.target.userImg.attributes.src.value,
             name : evt.target.name.value,
@@ -118,14 +135,15 @@ function Create({props}) {
             madeBy : evt.target.madeBy.value,
             active : evt.target.active.value,
             detail : evt.target.detail.value,
-        }
-/*         try{
-            await postCreate(object);
-            props.history.push('/');
+        } */
+        try{
+            //console.log(object);
+            //const result = await postCreate(object);
+            //console.log(result);
+            //props.history.push('/');
         }catch(e){
             console.log(e);
-        } */
-        console.log(object);
+        } 
     }
     return (
         <Template>
@@ -148,7 +166,7 @@ function Create({props}) {
                 </Form>
             </Card>
         </Template>
-    )
+    ) 
 }
 
 export default Create

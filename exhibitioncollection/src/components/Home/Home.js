@@ -104,6 +104,7 @@ const GridTemplate = styled.div`
     }
 `;
 const CreateButton = styled.button`
+    cursor:pointer;
     color: black;
     width: 20rem;
     height: 5rem;

@@ -138,9 +138,9 @@ function Create({props}) {
         } */
         try{
             //console.log(object);
-            //const result = await postCreate(object);
-            //console.log(result);
-            //props.history.push('/');
+            const result = await postCreate(object);
+            console.log(result);
+            props.history.push('/');
         }catch(e){
             console.log(e);
         } 

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
+import { DeleteOutlined } from '@ant-design/icons';
 
 const Active = styled.div`
     display: flex;
@@ -20,6 +21,31 @@ const Active = styled.div`
         font-size: 2rem;
         width: 5rem;
         height: 3rem;
+    }
+`;
+const Delete = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px, 12px;
+    position: absolute;
+    background : rgba(0, 0, 0, 0.5);
+    border-radius: 1.8rem;
+    right: 20px;
+    top: 20px;
+    font-size: 1.5vw;
+    width: 2.4vw;
+    height: 2.4vw;
+    color: white;
+    @media screen and (max-width:768px){
+        font-size: 2rem;
+        width: 5rem;
+        height: 3rem;
+    }
+    &:hover{
+        width: 2.6vw;
+        height: 2.6vw;
+        background : rgba(0, 0, 0, 1);
     }
 `;
 const Image = styled.img`
@@ -108,12 +134,21 @@ const MadeBy = styled.div`
 const ImageTemplate = styled.div`
     position: relative;
 `;  
+const onClickDelete = async (evt) => {
+    evt.stopPropagation();
+    try {
+        console.log(`delete`);
+    } catch (e) {
+        // fail
+    }
+}
 function Card({object, history}) {
     return (
         <CardTemplate onClick={()=>history.push(`/${object.idx}`)}>
             <ImageTemplate>
                 <Image src={object.img}></Image>
                 <Active>{object.active}</Active>
+                <Delete onClick={onClickDelete}><DeleteOutlined/></Delete>
             </ImageTemplate>
             <TextBox>
                 <TextBoxSub1>

@@ -11,11 +11,31 @@ const postCreate = async (object) => {
         });
         return data.data;
     } catch (e) {
-        console.error('[FAIL] POST ANSWER', e);
+        console.error('[FAIL] CREATE_POST ANSWER', e);
+        return e;
+    }
+}
+const postDelete = async (idx) => { 
+    try {
+        const { data } = await axios.delete(`${url}/projects/${idx}`);
+        return data.data;
+    } catch (e) {
+        console.error('[FAIL] DELETE_POST ANSWER', e);
+        return e;
+    }
+}
+const getPostList = async () => { 
+    try {
+        const { data } = await axios.get(`${url}/projects/read`);
+        return data.data;
+    } catch (e) {
+        console.error('[FAIL] GET_POST ANSWER', e);
         return e;
     }
 }
 
 export {
     postCreate,
+    postDelete,
+    getPostList
 };

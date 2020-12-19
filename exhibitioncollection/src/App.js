@@ -58,6 +58,7 @@ const object = [
 ]
 
 function App() {
+
   return (
     <Router>
       <Header></Header>
@@ -65,7 +66,7 @@ function App() {
           {/* <Route exact path='/' component={Home}></Route> */}
           <Route exact path='/' render={(props)=>(<Home props={props} object={object} ></Home>)}></Route>
           <Route exact path='/create' render={(props)=>(<Create props={props} />)}></Route>
-          <Route exact path='/:id' render={(props)=>(<Detail props={props} object={object}/>)}></Route>
+          <Route exact path='/:id' render={(props)=>(<Detail props={props}/>)}></Route>
           <Route path='/*'>404 NOT FOUND</Route>
         </Switch>
     </Router>

@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-
+import {useState, useEffect} from 'react';
+import {getPostList} from '../../lib/api/Post';
+import Loading from '../Loading/Loading';
 
 const Poster = styled.div`
     display: flex;
@@ -136,24 +138,51 @@ const Content = styled.div`
         margin-top: 2.5rem;
     }
 `;
-function Detail({object, props}) {    
-    const id=props.match.params.id;
-    return (
-        <>
-            <Poster src={object[id].img}>
-                <UserDiv>
-                    <UserIcon src={object[id].userImg}></UserIcon>
-                    <UserName>{object[id].madeBy}</UserName>
-                </UserDiv>
-                <MemberType>{object[id].active}</MemberType>
-            </Poster>
-            <Info>
-                <Title>{object[id].name}{object[id].subName}</Title>
-                <Duration>{object[id].term}</Duration>
-                <Content>{object[id].detail}</Content>
-            </Info>
-        </>
-    )
+function Detail({props}) {    
+    const id=Number(props.match.params.id);
+    const [postState, SetPostState] = useState({
+        post: null,
+        status: 'idle'
+    });
+
+    useEffect(()=>{
+        SetPostState({post: null, status: 'pending'});
+      try { 
+          (async() => {
+            const result = await getPostList();
+            setTimeout(()=>SetPostState({post: result.filter((post)=> post.id === id)[0], status: 'resolved'}),800);
+            console.log(result.filter((post)=> post.id === id)[0]);
+            console.log(result);
+          })();
+      } catch (error) {
+        SetPostState({post: null, status: 'rejected'});
+      }
+    },[]);
+    switch (postState.status){
+        case 'pending':
+            return <Loading></Loading>
+        case 'rejected' :
+            return <div>Load Fail</div>
+        case 'resolved' :
+            return (
+                <>
+                    <Poster src={postState.post.Images[0].img}>
+                        <UserDiv>
+                            <UserIcon src={postState.post.userImg}></UserIcon>
+                            <UserName>{postState.post.User.madeBy}</UserName>
+                        </UserDiv>
+                        <MemberType>{postState.post.User.active}</MemberType>
+                    </Poster>
+                    <Info>
+                        <Title>{postState.post.name}{postState.post.subName}</Title>
+                        <Duration>{postState.post.term}</Duration>
+                        <Content>{postState.post.detail}</Content>
+                    </Info>
+                </>
+            );
+        case 'idle':
+            return <div>idle status</div>
+    }
 }
 
 export default Detail

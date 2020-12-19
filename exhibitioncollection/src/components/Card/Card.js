@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import {withRouter} from 'react-router-dom';
 import { DeleteOutlined } from '@ant-design/icons';
+import {postDelete} from '../../lib/api/Post';
 
 const Active = styled.div`
     display: flex;
@@ -24,7 +25,7 @@ const Active = styled.div`
     }
 `;
 const Delete = styled.div`
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     padding: 4px, 12px;
@@ -72,6 +73,9 @@ const CardTemplate = styled.div`
         }
         ${Active}{
             background: #000000;
+        }
+        ${Delete}{
+            display: flex;
         }
     }
 `;
@@ -134,20 +138,23 @@ const MadeBy = styled.div`
 const ImageTemplate = styled.div`
     position: relative;
 `;  
-const onClickDelete = async (evt) => {
-    evt.stopPropagation();
-    try {
-        console.log(`delete`);
-    } catch (e) {
-        // fail
+function Card({object, history, UpdatePostList}) {
+
+    const onClickDelete = async (evt) => {
+        evt.stopPropagation();
+        try {
+            console.log(`delete`);
+            await postDelete(object.id);
+            UpdatePostList(object.id);
+        } catch (e) {
+            console.log(e);
+        }
     }
-}
-function Card({object, history}) {
     return (
-        <CardTemplate onClick={()=>history.push(`/${object.idx}`)}>
+        <CardTemplate onClick={()=>history.push(`/${object.id}`)}>
             <ImageTemplate>
-                <Image src={object.img}></Image>
-                <Active>{object.active}</Active>
+                <Image src={object.Images[0].img}></Image>
+                <Active>{object.User.active}</Active>
                 <Delete onClick={onClickDelete}><DeleteOutlined/></Delete>
             </ImageTemplate>
             <TextBox>
@@ -157,7 +164,7 @@ function Card({object, history}) {
                 </TextBoxSub1>
                 <TextBoxSub2>
                     <Term>{object.term}</Term>
-                    <MadeBy>{object.madeBy}</MadeBy>
+                    <MadeBy>{object.User.madeBy}</MadeBy>
                 </TextBoxSub2>
             </TextBox>
         </CardTemplate>

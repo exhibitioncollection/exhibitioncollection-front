@@ -1,6 +1,9 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import styled from 'styled-components';
 import Card from '../Card/Card';
+import {useState} from 'react';
+import {getPostList} from '../../lib/api/Post';
+import Loading from '../Loading/Loading';
 
 const Banner = styled.div`
     width: 100%;
@@ -118,29 +121,63 @@ const CreateButton = styled.button`
     margin-right: 10%; */
 `;
 function Home({object, props}) {
-    return (
-        <>
-            <Banner>
-                <TextBox>
-                    <TextPart>SOPT 27th</TextPart>
-                    <TextMain>디자인파트 졸전 모음 사이트</TextMain>
-                    <TextSub>천재적인 재능을 지닌 SOPT 27th 디자이너들의 학사를 향한 마지막 발악</TextSub>
-                    <TextMadeBy>Best Designers Collection by Mijung & Jin</TextMadeBy>
-                </TextBox>
-            </Banner>
-            <Body>
-                <TextTitle>All Projects</TextTitle>
-                <CreateButton onClick={()=>props.history.push('/create')} >Create Button</CreateButton>
-                <GridTemplate>
-                    {
-                        object.map((obj,idx)=>(
-                            <Card key={`Card+${idx}`} object={obj}></Card>
-                        ))
-                    }
-                </GridTemplate>
-            </Body>
-        </>
-    )
+    const [postListState, SetPostListState] = useState({
+        postList: null,
+        status: 'idle'
+    });
+
+    useEffect(()=>{
+        SetPostListState({postList: null, status: 'pending'});
+      try { 
+          (async() => {
+            const result = await getPostList();
+            setTimeout(()=>SetPostListState({postList: result, status: 'resolved'}),800);
+            console.log(result);
+          })();
+      } catch (error) {
+        SetPostListState({postList: null, status: 'rejected'});
+      }
+    },[]);
+
+    const UpdatePostList = (id)=>{
+        SetPostListState({
+            postList : postListState.postList.filter((post)=> post.id !== id),
+            status: 'resolved'
+        });
+      }
+
+    switch (postListState.status){
+        case 'pending':
+            return <Loading></Loading>
+        case 'rejected' :
+            return <div>Load Fail</div>
+        case 'resolved' :
+            return (
+                <>
+                    <Banner>
+                        <TextBox>
+                            <TextPart>SOPT 27th</TextPart>
+                            <TextMain>디자인파트 졸전 모음 사이트</TextMain>
+                            <TextSub>천재적인 재능을 지닌 SOPT 27th 디자이너들의 학사를 향한 마지막 발악</TextSub>
+                            <TextMadeBy>Best Designers Collection by Mijung & Jin</TextMadeBy>
+                        </TextBox>
+                    </Banner>
+                    <Body>
+                        <TextTitle>All Projects</TextTitle>
+                        <CreateButton onClick={()=>props.history.push('/create')} >Create Button</CreateButton>
+                        <GridTemplate>
+                            {
+                                postListState.postList.map((obj,idx)=>(
+                                    <Card UpdatePostList={UpdatePostList} key={`Card+${idx}`} object={obj}></Card>
+                                ))
+                            }
+                        </GridTemplate>
+                    </Body>
+                </>
+            );
+        case 'idle':
+            return <div>idle status</div>
+    }
 }
 
 export default Home
